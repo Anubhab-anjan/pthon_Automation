@@ -18,5 +18,4 @@ This repository currently includes:
 
 ---
 
-## 📁 Project Structure
 
