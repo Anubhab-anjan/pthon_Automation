@@ -18,28 +18,115 @@ A lightweight, autonomous, CLI-driven AI agent in **pure Python** inspired by Op
 
 ---
 
-## 🏗️ Core Architecture
+## 💻 Step-by-Step Setup Guide for your Laptop
 
+Follow these steps to set up and run the Autonomous AI Agent on your Windows, macOS, or Linux laptop.
+
+### 📋 Prerequisites
+1. **Python 3.10+** installed on your laptop ([Download Python](https://www.python.org/downloads/)).
+2. **Git** installed ([Download Git](https://git-scm.com/downloads)).
+3. A **Google Gemini API Key** ([Get Free Gemini API Key](https://aistudio.google.com/app/apikey)).
+
+---
+
+### Step 1: Clone the Repository
+
+Open your terminal (Command Prompt / PowerShell on Windows, or Terminal on macOS/Linux) and run:
+
+```bash
+git clone https://github.com/Anubhab-anjan/pthon_Automation.git
+cd pthon_Automation
 ```
-pthon_Automation/
-├── agent/
-│   ├── __init__.py
-│   ├── loop.py           # ReAct action-observation loop controller
-│   ├── tools.py          # Tool registry decorator (@tool) & schema generator
-│   ├── memory.py         # Short-term execution memory & context tracking
-│   ├── llm.py            # Gemini & OpenAI provider abstraction layer
-│   └── guardrails.py     # Dry-run policy & interactive safety manager
-├── tools/
-│   ├── __init__.py       # Auto-registers tool modules
-│   ├── file_tools.py     # File organization, move, copy, read, write tools
-│   ├── media_tools.py    # Refactored Image Editor & YouTube Downloader tools
-│   ├── os_tools.py       # Shell command execution & system info tools
-│   └── web_tools.py      # Web fetching & DuckDuckGo search tools
-├── main.py               # Interactive CLI terminal loop entry point
-├── .env.example          # Environment key & configuration template
-├── requirements.txt      # Lightweight dependencies
-└── README.md             # Documentation
+
+---
+
+### Step 2: Create & Activate a Virtual Environment
+
+It is recommended to use a virtual environment to keep dependencies clean:
+
+#### 🪟 Windows (Command Prompt / PowerShell)
+```cmd
+python -m venv .venv
+.venv\Scripts\activate
 ```
+
+#### 🍎 macOS / 🐧 Linux
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+---
+
+### Step 3: Install Required Dependencies
+
+Install the lightweight required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### Step 4: Configure Your API Key
+
+Create a `.env` configuration file from the template:
+
+#### 🪟 Windows (CMD / PowerShell)
+```cmd
+copy .env.example .env
+```
+
+#### 🍎 macOS / 🐧 Linux
+```bash
+cp .env.example .env
+```
+
+Open the newly created `.env` file in VS Code, Notepad, or any text editor, and add your Gemini API key:
+
+```ini
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+LLM_PROVIDER=gemini
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+*(Note: If you don't add an API key, the agent will automatically launch in **Offline DEMO/MOCK Mode** so you can still test tool execution loops!)*
+
+---
+
+### Step 5: Launch the AI Agent!
+
+Start the interactive CLI agent loop:
+
+```bash
+python main.py
+```
+
+You will see the agent startup banner:
+
+```text
+=================================================================
+[+] AUTONOMOUS CLI AI AGENT  (ReAct Loop Engine)
+=================================================================
+  * Provider       : GEMINI
+  * Model          : gemini-2.5-flash
+  * Dry-Run Mode   : DISABLED
+  * Safety Approval: INTERACTIVE CONFIRMATION
+  * Available Tools: 16 loaded
+=================================================================
+
+[+] Agent Ready. Type your request (or 'exit' to quit):
+
+ > 
+```
+
+Now type any goal! For example:
+- `open instagram`
+- `organize all PDF files in my Downloads folder`
+- `download YouTube video https://www.youtube.com/watch?v=...`
+- `batch edit images in ./imgs`
+- `search web for Python 3.12 release notes`
+- `get system info`
 
 ---
 
@@ -59,63 +146,10 @@ pthon_Automation/
 | | `download_youtube_video` | Downloads YouTube videos at highest resolution via `yt-dlp` / `pytube` |
 | | `get_youtube_video_info` | Retrieves video title, view count, uploader, and duration |
 | **System** | `execute_shell_command` | Executes arbitrary terminal shell commands (Safety check required) |
+| | `open_web_url` | Opens web URLs or apps (e.g. Instagram, Google) in default system browser |
 | | `get_system_info` | Inspects OS platform, Python version, working directory, and user environment |
 | **Web** | `fetch_webpage_content` | Extracts plain text from web page URLs |
 | | `search_web` | Searches DuckDuckGo for real-time web results |
-
----
-
-## 🚀 Quick Start
-
-### 1. Installation & Setup
-
-Clone the repository and install the lightweight requirements:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Configure API Keys
-
-Copy `.env.example` to `.env` and add your API key:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env`:
-
-```ini
-GEMINI_API_KEY=your_gemini_api_key_here
-LLM_PROVIDER=gemini
-GEMINI_MODEL=gemini-2.5-flash
-```
-
-### 3. Launch Interactive CLI Agent
-
-Run `main.py` to start the CLI session:
-
-```bash
-python main.py
-```
-
-Sample CLI output:
-
-```text
-=================================================================
-🤖  AUTONOMOUS CLI AI AGENT  (ReAct Loop Engine)
-=================================================================
-  • Provider       : GEMINI
-  • Model          : gemini-2.5-flash
-  • Dry-Run Mode   : DISABLED
-  • Safety Approval: INTERACTIVE CONFIRMATION
-  • Available Tools: 15 loaded
-=================================================================
-
-🤖 Agent Ready. Type your request (or 'exit' to quit):
-
- > Organize all PDF files in my Downloads folder into a "PDFs" directory.
-```
 
 ---
 
@@ -133,8 +167,37 @@ python main.py --auto-approve
 # Use OpenAI instead of Gemini
 python main.py --provider openai --model gpt-4o-mini
 
+# Use Mock/Demo mode (offline test mode)
+python main.py --provider mock
+
 # Customize maximum ReAct loop steps per task (default: 15)
 python main.py --max-steps 10
+```
+
+---
+
+## 🏗️ Core Architecture
+
+```
+pthon_Automation/
+├── agent/
+│   ├── __init__.py
+│   ├── loop.py           # ReAct action-observation loop controller
+│   ├── tools.py          # Tool registry decorator (@tool) & schema generator
+│   ├── memory.py         # Short-term execution memory & context tracking
+│   ├── llm.py            # Gemini & OpenAI provider abstraction layer
+│   └── guardrails.py     # Dry-run policy & interactive safety manager
+├── tools/
+│   ├── __init__.py       # Auto-registers tool modules
+│   ├── file_tools.py     # File organization, move, copy, read, write tools
+│   ├── media_tools.py    # Refactored Image Editor & YouTube Downloader tools
+│   ├── os_tools.py       # Shell command execution & browser URL tools
+│   └── web_tools.py      # Web fetching & DuckDuckGo search tools
+├── main.py               # Interactive CLI terminal loop entry point
+├── .env.example          # Environment key & configuration template
+├── .gitignore            # Git exclusion rules (safely hides your .env key)
+├── requirements.txt      # Lightweight dependencies
+└── README.md             # Documentation
 ```
 
 ---
