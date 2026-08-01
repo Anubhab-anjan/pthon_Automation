@@ -1,0 +1,22 @@
+# API Keys & Secrets
+.env
+.env.local
+
+# Python Environments & Cache
+.venv/
+env/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDEs & OS Files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Output directories
+editedImgs/
+scratch/
